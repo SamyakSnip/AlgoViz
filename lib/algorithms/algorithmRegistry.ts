@@ -16,6 +16,8 @@ import { dfs } from "./pathfinding/dfs";
 import { greedyBFS } from "./pathfinding/greedyBFS";
 import { bidirectionalSearch } from "./pathfinding/bidirectional";
 import { jps } from "./pathfinding/jps";
+import { bellmanFord } from "./pathfinding/bellmanFord";
+import { floydWarshall } from "./pathfinding/floydWarshall";
 import { prims } from "./graph/prims";
 import { kruskals } from "./graph/kruskals";
 import { connectedComponents } from "./graph/connectedComponents";
@@ -109,6 +111,8 @@ export const generateSteps = (
             if (algorithm === "GREEDY_BFS") return greedyBFS(grid, startNode, finishNode);
             if (algorithm === "BIDIRECTIONAL") return bidirectionalSearch(grid, startNode, finishNode);
             if (algorithm === "JPS") return jps(grid, startNode, finishNode);
+            if (algorithm === "BELLMAN_FORD") return bellmanFord(grid, startNode, finishNode);
+            if (algorithm === "FLOYD_WARSHALL") return floydWarshall(grid, startNode, finishNode);
             return [];
 
         case "CONNECTED_COMPONENTS":

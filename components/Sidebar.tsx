@@ -29,6 +29,8 @@ const ALGORITHMS: { category: string; items: { label: string; value: AlgorithmTy
             { label: "Greedy Best-First Search", value: "GREEDY_BFS" },
             { label: "Bidirectional Search", value: "BIDIRECTIONAL" },
             { label: "Jump Point Search (JPS)", value: "JPS" },
+            { label: "Bellman-Ford", value: "BELLMAN_FORD" },
+            { label: "Floyd-Warshall", value: "FLOYD_WARSHALL" },
             { label: "Breadth First Search (BFS)", value: "BFS" },
             { label: "DFS", value: "DFS" },
         ],

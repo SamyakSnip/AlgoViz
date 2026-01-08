@@ -19,11 +19,6 @@ interface VisualizerContextType {
     setActiveNodeId: (id: string | null) => void;
     traversalResult: string; // Added result string
     setTraversalResult: (result: string) => void;
-    // Graph State
-    graphNodes: GraphNode[];
-    setGraphNodes: (nodes: GraphNode[]) => void;
-    graphEdges: GraphEdge[];
-    setGraphEdges: (edges: GraphEdge[]) => void;
     isPlaying: boolean;
     isSidebarOpen: boolean;
     setIsSidebarOpen: (isOpen: boolean) => void;
@@ -65,6 +60,10 @@ interface VisualizerContextType {
     handleMouseEnter: (row: number, col: number) => void;
     handleMouseUp: () => void;
     clearBoard: () => void;
+    // Graph
+    graphNodes: GraphNode[];
+    graphEdges: GraphEdge[];
+    generateGraph: () => void;
     // Step Tracking
     steps: AnimationStep[];
     currentStep: number;
@@ -283,6 +282,72 @@ export const VisualizerProvider = ({ children }: { children: ReactNode }) => {
         generateArray();
     };
 
+    const generateGraph = () => {
+        if (isPlaying) return;
+
+        // Generate random graph with 8-12 nodes
+        const nodeCount = Math.floor(Math.random() * 5) + 8;
+        const nodes: GraphNode[] = [];
+        const edges: GraphEdge[] = [];
+
+        // Create nodes in a circular layout
+        const centerX = 400;
+        const centerY = 300;
+        const radius = 150;
+
+        for (let i = 0; i < nodeCount; i++) {
+            const angle = (i / nodeCount) * 2 * Math.PI;
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+
+            nodes.push({
+                id: `node-${i}`,
+                x,
+                y,
+                value: i
+            });
+        }
+
+        // Create random edges (ensure connectivity)
+        const edgeCount = Math.floor(nodeCount * 1.5);
+        const edgeSet = new Set<string>();
+
+        // First, create a spanning tree to ensure connectivity
+        for (let i = 1; i < nodeCount; i++) {
+            const source = Math.floor(Math.random() * i);
+            const target = i;
+            const key = `${source}-${target}`;
+            edgeSet.add(key);
+
+            edges.push({
+                source: `node-${source}`,
+                target: `node-${target}`,
+                weight: Math.floor(Math.random() * 10) + 1
+            });
+        }
+
+        // Add additional random edges
+        while (edges.length < edgeCount) {
+            const source = Math.floor(Math.random() * nodeCount);
+            const target = Math.floor(Math.random() * nodeCount);
+
+            if (source !== target) {
+                const key = `${Math.min(source, target)}-${Math.max(source, target)}`;
+                if (!edgeSet.has(key)) {
+                    edgeSet.add(key);
+                    edges.push({
+                        source: `node-${source}`,
+                        target: `node-${target}`,
+                        weight: Math.floor(Math.random() * 10) + 1
+                    });
+                }
+            }
+        }
+
+        setGraphNodes(nodes);
+        setGraphEdges(edges);
+    };
+
     // Helper for async delay
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -316,7 +381,6 @@ export const VisualizerProvider = ({ children }: { children: ReactNode }) => {
         setSteps(steps);
 
         for (let i = 0; i < steps.length; i++) {
-            setCurrentStep(i);
             const step = steps[i];
 
             if (step.type === "compare") {
@@ -458,6 +522,9 @@ export const VisualizerProvider = ({ children }: { children: ReactNode }) => {
             if (shouldStopRef.current) {
                 break;
             }
+
+            // Update current step AFTER processing, before sleep
+            setCurrentStep(i);
             await sleep(getDelay());
         }
 
@@ -526,6 +593,9 @@ export const VisualizerProvider = ({ children }: { children: ReactNode }) => {
                 handleMouseEnter,
                 handleMouseUp,
                 clearBoard,
+                graphNodes,
+                graphEdges,
+                generateGraph,
                 steps,
                 currentStep
             }}

@@ -24,7 +24,7 @@ const Node = React.memo(({
     let bgClass = "bg-white/5"; // Default
     if (isStart) bgClass = "bg-green-500 shadow-[0_0_10px_#22c55e]";
     else if (isFinish) bgClass = "bg-red-500 shadow-[0_0_10px_#ef4444]";
-    else if (isWall) bgClass = "bg-slate-700 animate-pulse";
+    else if (isWall) bgClass = "bg-gradient-to-br from-slate-700 to-slate-900 border-2 border-slate-500 shadow-inner";
     else if (status === "visited") bgClass = "bg-blue-500/50";
     else if (status === "path") bgClass = "bg-yellow-400 shadow-[0_0_10px_#facc15]";
 

@@ -2,9 +2,11 @@
 
 import React from "react";
 import { useVisualizer } from "@/context/VisualizerContext";
-import { Play, RotateCcw, Shuffle, Square, Menu, X, Code } from "lucide-react";
+import { Play, RotateCcw, Shuffle, Square, Menu, X, Code, ChevronDown, Info } from "lucide-react";
 import { generateSteps } from "@/lib/algorithms/algorithmRegistry";
 import { recursiveDivisionMaze } from "@/lib/algorithms/maze/recursiveDivision";
+import { primsMaze } from "@/lib/algorithms/maze/primsMaze";
+import { binaryTreeMaze } from "@/lib/algorithms/maze/binaryTreeMaze";
 
 export const Header = () => {
     const {
@@ -22,13 +24,20 @@ export const Header = () => {
         isSidebarOpen,
         setIsSidebarOpen,
         isPseudocodeOpen,
-        setIsPseudocodeOpen
+        setIsPseudocodeOpen,
+        generateGraph
     } = useVisualizer();
+
+    const [mazeAlgorithm, setMazeAlgorithm] = React.useState<"recursive" | "prims" | "binary">("recursive");
+    const [showMazeMenu, setShowMazeMenu] = React.useState(false);
+    const [showLegend, setShowLegend] = React.useState(false);
 
     const isPathfinding = [
         "DIJKSTRA", "ASTAR", "BFS", "DFS", "GREEDY_BFS", "BIDIRECTIONAL",
         "JPS", "PRIMS", "KRUSKALS", "CONNECTED_COMPONENTS"
     ].includes(algorithm);
+
+    const isGraph = ["PRIMS", "KRUSKALS", "CONNECTED_COMPONENTS", "TOPOLOGICAL_SORT", "SCC"].includes(algorithm);
 
     const handlePlay = () => {
         const steps = generateSteps(algorithm, array, grid, lcsStrings);
@@ -53,8 +62,21 @@ export const Header = () => {
             }
             if (!startNode || !finishNode) return;
 
-            const steps = recursiveDivisionMaze(grid, startNode, finishNode);
+            let steps;
+            switch (mazeAlgorithm) {
+                case "prims":
+                    steps = primsMaze(grid, startNode, finishNode);
+                    break;
+                case "binary":
+                    steps = binaryTreeMaze(grid, startNode, finishNode);
+                    break;
+                case "recursive":
+                default:
+                    steps = recursiveDivisionMaze(grid, startNode, finishNode);
+                    break;
+            }
             runAnimation(steps);
+            setShowMazeMenu(false);
         }, 100);
     };
 
@@ -105,8 +127,8 @@ export const Header = () => {
                 <button
                     onClick={() => setIsPseudocodeOpen(!isPseudocodeOpen)}
                     className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${isPseudocodeOpen
-                            ? "bg-purple-500/20 text-purple-400 border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.2)]"
-                            : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
+                        ? "bg-purple-500/20 text-purple-400 border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.2)]"
+                        : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
                         }`}
                 >
                     <Code size={16} />
@@ -125,13 +147,52 @@ export const Header = () => {
                 </button>
 
                 {isPathfinding && (
+                    <div className="relative">
+                        <button
+                            onClick={() => setShowMazeMenu(!showMazeMenu)}
+                            className="flex items-center gap-1 p-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50"
+                            disabled={isPlaying}
+                            title="Generate Maze"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-7" /><path d="M12 7V2" /><path d="M7 22l5-5 5 5" /><path d="M7 2l5 5 5-5" /><path d="M8 12h8" /></svg>
+                            <ChevronDown size={14} />
+                        </button>
+
+                        {showMazeMenu && (
+                            <div className="absolute top-full mt-1 right-0 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-50 min-w-[180px]">
+                                <button
+                                    onClick={() => { setMazeAlgorithm("recursive"); handleGenerateMaze(); }}
+                                    className="w-full text-left px-4 py-2 hover:bg-slate-700 text-sm text-white first:rounded-t-lg"
+                                >
+                                    Recursive Division
+                                </button>
+                                <button
+                                    onClick={() => { setMazeAlgorithm("prims"); handleGenerateMaze(); }}
+                                    className="w-full text-left px-4 py-2 hover:bg-slate-700 text-sm text-white"
+                                >
+                                    Prim's Maze
+                                </button>
+                                <button
+                                    onClick={() => { setMazeAlgorithm("binary"); handleGenerateMaze(); }}
+                                    className="w-full text-left px-4 py-2 hover:bg-slate-700 text-sm text-white last:rounded-b-lg"
+                                >
+                                    Binary Tree
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Generate Graph Button */}
+                {isGraph && (
                     <button
-                        onClick={handleGenerateMaze}
-                        className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50"
+                        onClick={() => { generateGraph(); }}
+                        className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50"
                         disabled={isPlaying}
-                        title="Generate Maze"
+                        title="Generate Random Graph"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-7" /><path d="M12 7V2" /><path d="M7 22l5-5 5 5" /><path d="M7 2l5 5 5-5" /><path d="M8 12h8" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /><circle cx="19" cy="5" r="2" /><circle cx="5" cy="19" r="2" /><path d="M10.4 21.9a10 10 0 0 0 9.941-15.416" /><path d="M13.5 2.1a10 10 0 0 0-9.9 15.8" /></svg>
+                        <span className="hidden md:inline text-sm">Generate Graph</span>
                     </button>
                 )}
 
@@ -152,6 +213,70 @@ export const Header = () => {
                         <span>Visualize</span>
                     </button>
                 )}
+
+                {/* Legend Dropdown */}
+                <div className="relative">
+                    <button
+                        onClick={() => setShowLegend(!showLegend)}
+                        className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white"
+                        title="Legend"
+                    >
+                        <Info size={18} />
+                        <span className="hidden md:inline text-sm">Legend</span>
+                    </button>
+
+                    {showLegend && (
+                        <div className="absolute top-full mt-2 right-0 p-4 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl z-50 min-w-[200px]">
+                            <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3 border-b border-white/10 pb-2">Legend</h4>
+                            <div className="space-y-2">
+                                {isPathfinding && (
+                                    <>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-green-500" />
+                                            <span className="text-xs text-slate-200">Start</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-red-500" />
+                                            <span className="text-xs text-slate-200">Target</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded bg-slate-700" />
+                                            <span className="text-xs text-slate-200">Wall</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-cyan-500/50" />
+                                            <span className="text-xs text-slate-200">Visited</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                                            <span className="text-xs text-slate-200">Path</span>
+                                        </div>
+                                    </>
+                                )}
+                                {!isPathfinding && (
+                                    <>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-cyan-500" />
+                                            <span className="text-xs text-slate-200">Unsorted</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                                            <span className="text-xs text-slate-200">Compare</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-red-500" />
+                                            <span className="text-xs text-slate-200">Swap</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-3 h-3 rounded-full bg-green-500" />
+                                            <span className="text-xs text-slate-200">Sorted</span>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </header>
     );

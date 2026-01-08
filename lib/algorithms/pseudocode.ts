@@ -151,5 +151,42 @@ export const PSEUDOCODE_DATA: Partial<Record<AlgorithmType, PseudocodeDef>> = {
             if (step.type === "found") return 6; // Final ordering
             return 3; // Loop iteration
         }
+    ),
+    BELLMAN_FORD: createDef(
+        [
+            "function bellmanFord(graph, start):",
+            "  dist[start] = 0",
+            "  for i = 1 to V-1:",
+            "    for each edge (u, v) with weight w:",
+            "      if dist[u] + w < dist[v]:",
+            "        dist[v] = dist[u] + w",
+            "  return dist"
+        ],
+        (step) => {
+            if (step.type === "visit") return 3; // Processing node
+            if (step.type === "compare") return 4; // Edge relaxation check
+            if (step.type === "path") return 5; // Update distance
+            if (step.type === "found") return 6; // Path found
+            return 2; // Loop iteration
+        }
+    ),
+    FLOYD_WARSHALL: createDef(
+        [
+            "function floydWarshall(graph):",
+            "  initialize dist matrix",
+            "  for k = 0 to V-1:",
+            "    for i = 0 to V-1:",
+            "      for j = 0 to V-1:",
+            "        if dist[i][k] + dist[k][j] < dist[i][j]:",
+            "          dist[i][j] = dist[i][k] + dist[k][j]",
+            "  return dist"
+        ],
+        (step) => {
+            if (step.type === "visit") return 2; // Processing intermediate vertex k
+            if (step.type === "compare") return 5; // Checking if path through k is shorter
+            if (step.type === "path") return 6; // Update distance
+            if (step.type === "found") return 7; // Final path
+            return 3; // Loop iteration
+        }
     )
 };

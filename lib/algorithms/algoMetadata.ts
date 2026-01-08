@@ -392,6 +392,110 @@ def dijkstra(graph, start):
             python: placeholderCode("Python")
         }
     },
+    BELLMAN_FORD: {
+        name: "Bellman-Ford Algorithm",
+        description: "Single-source shortest path algorithm that can handle negative edge weights.",
+        complexity: { time: "O(VE)", space: "O(V)" },
+        category: "Pathfinding",
+        learnMore: "The Bellman-Ford algorithm computes shortest paths from a single source vertex to all other vertices in a weighted graph. Unlike Dijkstra's algorithm, it can handle graphs with negative edge weights and can detect negative cycles. It works by relaxing all edges V-1 times.",
+        code: {
+            cpp: `void bellmanFord(int src) {
+    dist[src] = 0;
+    for (int i = 0; i < V - 1; i++) {
+        for (auto edge : edges) {
+            int u = edge.from;
+            int v = edge.to;
+            int weight = edge.weight;
+            if (dist[u] != INF && dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+            }
+        }
+    }
+    // Check for negative cycles
+    for (auto edge : edges) {
+        if (dist[edge.from] + edge.weight < dist[edge.to])
+            cout << "Negative cycle detected";
+    }
+}`,
+            js: `function bellmanFord(graph, start) {
+    const dist = {};
+    for (let node in graph) dist[node] = Infinity;
+    dist[start] = 0;
+    
+    for (let i = 0; i < Object.keys(graph).length - 1; i++) {
+        for (let u in graph) {
+            for (let [v, weight] of graph[u]) {
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                }
+            }
+        }
+    }
+    return dist;
+}`,
+            python: `def bellman_ford(graph, start):
+    dist = {node: float('inf') for node in graph}
+    dist[start] = 0
+    
+    for _ in range(len(graph) - 1):
+        for u in graph:
+            for v, weight in graph[u]:
+                if dist[u] + weight < dist[v]:
+                    dist[v] = dist[u] + weight
+    return dist`
+        }
+    },
+    FLOYD_WARSHALL: {
+        name: "Floyd-Warshall Algorithm",
+        description: "All-pairs shortest path algorithm using dynamic programming.",
+        complexity: { time: "O(V³)", space: "O(V²)" },
+        category: "Pathfinding",
+        learnMore: "Floyd-Warshall algorithm finds shortest paths between all pairs of vertices in a weighted graph. It uses dynamic programming with a 3-nested loop structure. The algorithm can handle negative edge weights but not negative cycles. It's particularly useful when you need distances between all pairs of nodes.",
+        code: {
+            cpp: `void floydWarshall() {
+    // Initialize dist matrix
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] + dist[k][j] < dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+            }
+        }
+    }
+}`,
+            js: `function floydWarshall(graph) {
+    const dist = {};
+    // Initialize
+    for (let i in graph) {
+        dist[i] = {};
+        for (let j in graph) {
+            dist[i][j] = i === j ? 0 : Infinity;
+        }
+    }
+    
+    for (let k in graph) {
+        for (let i in graph) {
+            for (let j in graph) {
+                if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+    return dist;
+}`,
+            python: `def floyd_warshall(graph):
+    dist = {i: {j: 0 if i == j else float('inf') 
+                for j in graph} for i in graph}
+    
+    for k in graph:
+        for i in graph:
+            for j in graph:
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    return dist`
+        }
+    },
 
     // Searching
     LINEAR: {

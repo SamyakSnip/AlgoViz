@@ -16,7 +16,6 @@ import { TreeVisualizer } from "./TreeVisualizer";
 import { TreeControls } from "./TreeControls";
 import { GraphVisualizer } from "./GraphVisualizer";
 import { GraphControls } from "./GraphControls";
-import { Legend } from "./Legend";
 
 
 export const VisualizerCanvas = () => {
@@ -28,7 +27,8 @@ export const VisualizerCanvas = () => {
     const isStringAlgo = algorithm === "KMP" || algorithm === "RABIN_KARP";
     const isDS = algorithm === "STACK" || algorithm === "QUEUE" || algorithm === "LINKED_LIST";
     const isTree = algorithm === "BST" || algorithm === "AVL";
-    const isGraph = algorithm === "SCC";
+    const isGraph = algorithm === "SCC" || algorithm === "PRIMS" || algorithm === "KRUSKALS" ||
+        algorithm === "CONNECTED_COMPONENTS" || algorithm === "TOPOLOGICAL_SORT";
 
 
 
@@ -158,8 +158,6 @@ export const VisualizerCanvas = () => {
                             ))}
                         </div>
                     )}
-
-                    <Legend />
                 </>
             )}
 
@@ -212,12 +210,15 @@ export const VisualizerCanvas = () => {
 
 
             {!isSortingOrSearching && !isDPTableAlgo && !isStringAlgo && !isDS && !isTree && !isGraph && algorithm !== "NQUEENS" && algorithm !== "SUDOKU" && (
-                <div className="w-full h-full flex items-center justify-center">
-
-
+                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                    {/* Wall Toggle Hint */}
+                    <div className="px-4 py-2 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                        <p className="text-sm text-purple-300 flex items-center gap-2">
+                            <span className="text-lg">💡</span>
+                            <span>Click cells to toggle walls</span>
+                        </p>
+                    </div>
                     <Grid />
-
-
                 </div>
             )}
         </main>

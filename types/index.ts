@@ -20,6 +20,8 @@ export type AlgorithmType =
     | "GREEDY_BFS"
     | "BIDIRECTIONAL"
     | "JPS"
+    | "BELLMAN_FORD"
+    | "FLOYD_WARSHALL"
     | "PRIMS"
     | "KRUSKALS"
     | "KNAPSACK"
@@ -32,6 +34,8 @@ export type AlgorithmType =
     | "STACK"
     | "QUEUE"
     | "LINKED_LIST"
+    | "MIN_HEAP"
+    | "MAX_HEAP"
     | "BST"
     | "AVL"
     | "SCC";
@@ -67,6 +71,14 @@ export interface TreeNode {
     y: number;
 }
 
+export interface HeapNode {
+    id: string;
+    value: number;
+    index: number;
+    x: number;
+    y: number;
+}
+
 export interface GraphNode {
     id: string;
     x: number;
@@ -77,6 +89,7 @@ export interface GraphNode {
 export interface GraphEdge {
     source: string;
     target: string;
+    weight?: number;
 }
 
 export type NodeStatus = "unvisited" | "visited" | "wall" | "path" | "start" | "finish";
