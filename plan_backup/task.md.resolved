@@ -1,0 +1,68 @@
+# Task Checklist
+
+- [x] **Project Setup**
+    - [x] Initial Next.js 14+ Setup (App Router, TS, Tailwind)
+    - [x] Basic UI Layout (Sidebar, Header, Main Canvas)
+    - [x] Color Theme & Aesthetics (Dark mode, Neon accents)
+
+- [x] **Core Features**
+    - [x] Algorithm Context/State Management
+    - [x] Animation Control (Play, Pause, Reset, Speed)
+    - [x] Random Array Generation
+
+- [x] **Sorting Algorithms**
+    - [x] Bubble Sort
+    - [x] Selection Sort
+    - [x] Insertion Sort
+    - [x] Merge Sort
+    - [x] Quick Sort
+    - [x] Heap Sort
+    - [x] Shell Sort
+    - [x] Counting Sort
+    - [x] Radix Sort (Block & Bucket Visualization)
+    - [x] Bucket Sort (Block & Bucket Visualization)
+
+- [x] **Searching Algorithms**
+    - [x] Linear Search
+    - [x] Binary Search
+
+- [x] **Backtracking Algorithms**
+    - [x] N-Queens Problem
+    - [x] Sudoku Solver
+
+- [x] **Pathfinding Algorithms** (Grid-based)
+    - [x] Dijkstra's Algorithm
+    - [x] A* Search
+    - [x] Breadth-First Search (BFS)
+    - [x] Depth-First Search (DFS)
+    - [x] Greedy Best-First Search
+    - [x] Bidirectional Search
+    - [x] Jump Point Search (JPS)
+    - [x] **Maze Generation** (Recursive Division)
+
+- [x] **Graph Algorithms**
+    - [x] Prim's Algorithm (MST)
+    - [x] Kruskal's Algorithm (MST)
+
+- [ ] **Dynamic Programming**
+    - [x] 0/1 Knapsack Problem (Debugged & Working)
+    - [x] Longest Common Subsequence (LCS)
+    - [x] Longest Increasing Subsequence (LIS)
+    - [ ] Strongly Connected Components
+
+- [ ] **String Algorithms** (Proposed)
+    - [ ] KMP Algorithm
+    - [ ] Rabin-Karp
+
+- [ ] **Tree Algorithms** (Proposed)
+    - [ ] BST Operations
+    - [ ] AVL Tree Rotations
+
+- [ ] **Data Structures** (Proposed)
+    - [ ] Stack/Queue Visualizer
+    - [ ] Linked List
+
+- [ ] **Final Polish**
+    - [ ] Performance Optimization
+    - [ ] Accessibility Check
+    - [ ] Mobile Responsiveness Tweaks
