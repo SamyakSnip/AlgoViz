@@ -66,6 +66,7 @@ const ALGORITHMS: { category: string; items: { label: string; value: AlgorithmTy
         category: "Graph (General)",
         items: [
             { label: "Connected Components", value: "CONNECTED_COMPONENTS" },
+            { label: "Topological Sort", value: "TOPOLOGICAL_SORT" },
         ],
     },
     {
