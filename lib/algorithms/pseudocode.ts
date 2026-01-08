@@ -133,5 +133,23 @@ export const PSEUDOCODE_DATA: Partial<Record<AlgorithmType, PseudocodeDef>> = {
             if (step.type === "compare") return 3; // Heapify internals
             return 1;
         }
+    ),
+    TOPOLOGICAL_SORT: createDef(
+        [
+            "function topologicalSort(graph):",
+            "  visited = set()",
+            "  stack = []",
+            "  for each vertex v:",
+            "    if v not in visited:",
+            "      dfs(v, visited, stack)",
+            "  return reversed(stack)"
+        ],
+        (step) => {
+            if (step.type === "visit") return 5; // DFS visit
+            if (step.type === "compare") return 5; // Checking neighbors
+            if (step.type === "path") return 6; // Adding to stack
+            if (step.type === "found") return 6; // Final ordering
+            return 3; // Loop iteration
+        }
     )
 };

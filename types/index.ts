@@ -28,6 +28,7 @@ export type AlgorithmType =
     | "KMP"
     | "RABIN_KARP"
     | "CONNECTED_COMPONENTS"
+    | "TOPOLOGICAL_SORT"
     | "STACK"
     | "QUEUE"
     | "LINKED_LIST"

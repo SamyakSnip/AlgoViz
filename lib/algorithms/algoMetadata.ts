@@ -456,6 +456,65 @@ def dijkstra(graph, start):
             python: placeholderCode("Python")
         }
     },
+    TOPOLOGICAL_SORT: {
+        name: "Topological Sort",
+        description: "Linear ordering of vertices in a directed acyclic graph (DAG) where for every edge u→v, u comes before v.",
+        complexity: { time: "O(V + E)", space: "O(V)" },
+        category: "Graph",
+        learnMore: "Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge u→v, vertex u comes before v in the ordering. It's commonly used in scheduling tasks, resolving symbol dependencies in linkers, and determining the order of compilation tasks.",
+        code: {
+            cpp: `void topologicalSortUtil(int v, bool visited[], stack<int>& Stack) {
+    visited[v] = true;
+    for (int i : adj[v])
+        if (!visited[i])
+            topologicalSortUtil(i, visited, Stack);
+    Stack.push(v);
+}
+
+void topologicalSort() {
+    stack<int> Stack;
+    bool* visited = new bool[V];
+    for (int i = 0; i < V; i++) visited[i] = false;
+    for (int i = 0; i < V; i++)
+        if (!visited[i])
+            topologicalSortUtil(i, visited, Stack);
+}`,
+            js: `function topologicalSort(graph) {
+    const visited = new Set();
+    const stack = [];
+    
+    function dfs(node) {
+        visited.add(node);
+        for (let neighbor of graph[node]) {
+            if (!visited.has(neighbor)) {
+                dfs(neighbor);
+            }
+        }
+        stack.push(node);
+    }
+    
+    for (let node in graph) {
+        if (!visited.has(node)) dfs(node);
+    }
+    return stack.reverse();
+}`,
+            python: `def topological_sort(graph):
+    visited = set()
+    stack = []
+    
+    def dfs(node):
+        visited.add(node)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                dfs(neighbor)
+        stack.append(node)
+    
+    for node in graph:
+        if node not in visited:
+            dfs(node)
+    return stack[::-1]`
+        }
+    },
     SCC: {
         name: "Strongly Connected Components",
         description: "Finds subgraphs where every vertex is reachable from every other vertex.",

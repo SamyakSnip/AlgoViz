@@ -19,6 +19,7 @@ import { jps } from "./pathfinding/jps";
 import { prims } from "./graph/prims";
 import { kruskals } from "./graph/kruskals";
 import { connectedComponents } from "./graph/connectedComponents";
+import { topologicalSort } from "./graph/topologicalSort";
 import { knapsack } from "./dp/knapsack";
 
 import { lcs } from "./dp/lcs";
@@ -113,6 +114,10 @@ export const generateSteps = (
         case "CONNECTED_COMPONENTS":
             if (!grid) return [];
             return connectedComponents(grid);
+
+        case "TOPOLOGICAL_SORT":
+            if (!grid) return [];
+            return topologicalSort(grid);
 
 
         // Dynamic Programming
