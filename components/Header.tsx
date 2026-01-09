@@ -89,11 +89,11 @@ export const Header = () => {
     };
 
     return (
-        <header className="h-16 border-b border-[var(--border)] bg-[var(--card)]/50 backdrop-blur flex items-center justify-between px-6 sticky top-0 z-50">
-            <div className="flex items-center gap-4">
+        <header className="h-16 border-b border-[var(--border)] bg-[var(--card)]/50 backdrop-blur flex items-center justify-between px-4 md:px-6 sticky top-0 z-50">
+            <div className="flex items-center gap-2 md:gap-4">
                 <button
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className="p-2 -ml-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 md:hidden"
+                    className="p-2 md:p-2 -ml-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Toggle Menu"
                 >
                     {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
@@ -102,14 +102,15 @@ export const Header = () => {
                     <div className="w-8 h-8 rounded bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center font-bold text-black">
                         AV
                     </div>
-                    <h1 className="text-xl font-bold tracking-tight text-white">
+                    <h1 className="text-lg md:text-xl font-bold tracking-tight text-white">
                         Algo<span className="text-[var(--primary)]">Viz</span>
                     </h1>
                 </div>
             </div>
 
-            <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 mr-4">
+            <div className="flex items-center gap-2 md:gap-4">
+                {/* Speed Control - Desktop */}
+                <div className="hidden md:flex items-center gap-2 mr-4">
                     <span className="text-xs text-gray-400">Speed</span>
                     <input
                         type="range"
@@ -122,24 +123,49 @@ export const Header = () => {
                     />
                 </div>
 
-                <div className="h-6 w-px bg-white/10 mx-2" />
+                {/* Speed Control - Mobile (Preset Buttons) */}
+                <div className="flex md:hidden items-center gap-1">
+                    <button
+                        onClick={() => setSpeed(20)}
+                        className={`px-2 py-1 text-xs rounded ${speed <= 30 ? 'bg-blue-500/20 text-blue-400' : 'text-slate-400'}`}
+                        disabled={isPlaying}
+                    >
+                        Slow
+                    </button>
+                    <button
+                        onClick={() => setSpeed(50)}
+                        className={`px-2 py-1 text-xs rounded ${speed > 30 && speed <= 70 ? 'bg-blue-500/20 text-blue-400' : 'text-slate-400'}`}
+                        disabled={isPlaying}
+                    >
+                        Med
+                    </button>
+                    <button
+                        onClick={() => setSpeed(90)}
+                        className={`px-2 py-1 text-xs rounded ${speed > 70 ? 'bg-blue-500/20 text-blue-400' : 'text-slate-400'}`}
+                        disabled={isPlaying}
+                    >
+                        Fast
+                    </button>
+                </div>
+
+                <div className="h-6 w-px bg-white/10 mx-1 md:mx-2 hidden md:block" />
 
                 <button
                     onClick={() => setIsPseudocodeOpen(!isPseudocodeOpen)}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${isPseudocodeOpen
+                    className={`flex items-center gap-2 px-2 md:px-3 py-2 rounded-lg text-sm font-medium transition-all min-w-[44px] min-h-[44px] justify-center ${isPseudocodeOpen
                         ? "bg-purple-500/20 text-purple-400 border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.2)]"
                         : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
                         }`}
                 >
-                    <Code size={16} />
+                    <Code size={18} />
                     <span className="hidden md:inline">Pseudocode</span>
                 </button>
 
-                <div className="h-6 w-px bg-white/10 mx-2" />
+                <div className="h-6 w-px bg-white/10 mx-1 md:mx-2 hidden md:block" />
 
                 <button
                     onClick={handleReset}
-                    className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50"
+                    className="p-2 md:p-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     disabled={isPlaying}
                     title={isPathfinding ? "Clear Board" : "Generate New Array"}
                 >
@@ -150,7 +176,7 @@ export const Header = () => {
                     <div className="relative">
                         <button
                             onClick={() => setShowMazeMenu(!showMazeMenu)}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50"
+                            className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50 min-w-[44px] min-h-[44px]"
                             disabled={isPlaying}
                             title="Generate Maze"
                         >
@@ -162,26 +188,26 @@ export const Header = () => {
                                 <path d="M15 3v18" />
                             </svg>
                             <span className="hidden md:inline text-sm">Maze</span>
-                            <ChevronDown size={14} />
+                            <ChevronDown size={14} className="hidden md:inline" />
                         </button>
 
                         {showMazeMenu && (
                             <div className="absolute top-full mt-1 right-0 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-50 min-w-[180px]">
                                 <button
                                     onClick={() => { setMazeAlgorithm("recursive"); handleGenerateMaze(); }}
-                                    className="w-full text-left px-4 py-2 hover:bg-slate-700 text-sm text-white first:rounded-t-lg"
+                                    className="w-full text-left px-4 py-3 hover:bg-slate-700 text-sm text-white first:rounded-t-lg"
                                 >
                                     Recursive Division
                                 </button>
                                 <button
                                     onClick={() => { setMazeAlgorithm("prims"); handleGenerateMaze(); }}
-                                    className="w-full text-left px-4 py-2 hover:bg-slate-700 text-sm text-white"
+                                    className="w-full text-left px-4 py-3 hover:bg-slate-700 text-sm text-white"
                                 >
                                     Prim's Maze
                                 </button>
                                 <button
                                     onClick={() => { setMazeAlgorithm("binary"); handleGenerateMaze(); }}
-                                    className="w-full text-left px-4 py-2 hover:bg-slate-700 text-sm text-white last:rounded-b-lg"
+                                    className="w-full text-left px-4 py-3 hover:bg-slate-700 text-sm text-white last:rounded-b-lg"
                                 >
                                     Binary Tree
                                 </button>
@@ -194,7 +220,7 @@ export const Header = () => {
                 {isGraph && (
                     <button
                         onClick={() => { generateGraph(); }}
-                        className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50"
+                        className="flex items-center gap-1 md:gap-2 p-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white disabled:opacity-50 min-w-[44px] min-h-[44px]"
                         disabled={isPlaying}
                         title="Generate Random Graph"
                     >
@@ -206,26 +232,26 @@ export const Header = () => {
                 {isPlaying ? (
                     <button
                         onClick={stopAnimation}
-                        className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.5)]"
+                        className="flex items-center gap-2 px-3 md:px-4 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.5)] min-h-[44px]"
                     >
                         <Square size={18} fill="currentColor" />
-                        <span>Stop</span>
+                        <span className="hidden sm:inline">Stop</span>
                     </button>
                 ) : (
                     <button
                         onClick={handlePlay}
-                        className="flex items-center gap-2 px-4 py-2 bg-[var(--primary)] text-black font-bold rounded-lg hover:bg-[var(--primary)]/90 transition-all disabled:opacity-50 shadow-[0_0_15px_rgba(0,255,157,0.3)] hover:shadow-[0_0_25px_rgba(0,255,157,0.5)]"
+                        className="flex items-center gap-2 px-3 md:px-4 py-2 bg-[var(--primary)] text-black font-bold rounded-lg hover:bg-[var(--primary)]/90 transition-all disabled:opacity-50 shadow-[0_0_15px_rgba(0,255,157,0.3)] hover:shadow-[0_0_25px_rgba(0,255,157,0.5)] min-h-[44px]"
                     >
                         <Play size={18} fill="currentColor" />
-                        <span>Visualize</span>
+                        <span className="hidden sm:inline">Visualize</span>
                     </button>
                 )}
 
                 {/* Legend Dropdown */}
-                <div className="relative">
+                <div className="relative hidden md:block">
                     <button
                         onClick={() => setShowLegend(!showLegend)}
-                        className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white"
+                        className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white min-w-[44px] min-h-[44px]"
                         title="Legend"
                     >
                         <Info size={18} />
