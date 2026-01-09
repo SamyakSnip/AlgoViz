@@ -1,5 +1,7 @@
 # Algorithm Visualizer
 
+🚀 **Live Demo**: [https://algo-viz-seven-rho.vercel.app/](https://algo-viz-seven-rho.vercel.app/)
+
 A comprehensive, interactive web application for visualizing algorithms in real-time. Built with Next.js 14+, TypeScript, and Tailwind CSS.
 
 ## 🎯 Project Overview
