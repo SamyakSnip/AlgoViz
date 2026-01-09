@@ -44,26 +44,26 @@ export const GraphControls = () => {
 
     return (
         <DraggableControlWrapper>
-            <div className="flex items-center gap-2 overflow-x-auto max-w-[95vw] scrollbar-hide">
+            <div className="flex flex-wrap md:flex-nowrap items-center gap-2 overflow-x-auto max-w-[95vw] scrollbar-hide p-1">
                 <button
                     onClick={handleRandom}
                     disabled={isPlaying}
-                    className="flex items-center gap-1 px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded transition-colors disabled:opacity-50 text-sm font-bold text-white"
+                    className="flex items-center gap-1 px-3 md:px-3 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-slate-700 hover:bg-slate-600 rounded transition-colors disabled:opacity-50 text-sm font-bold text-white shrink-0"
                     aria-label="Generate Random Graph"
                 >
-                    <Shuffle size={14} />
+                    <Shuffle size={16} className="md:w-3.5 md:h-3.5" />
                     <span>Random Graph</span>
                 </button>
 
-                <div className="h-6 w-px bg-white/10 mx-1" />
+                <div className="h-6 w-px bg-white/10 mx-1 hidden md:block" />
 
                 <button
                     onClick={handleRun}
                     disabled={isPlaying || graphNodes.length === 0}
-                    className="flex items-center gap-1 px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded transition-colors disabled:opacity-50 text-sm font-bold text-white shadow-lg shadow-blue-500/20"
+                    className="flex items-center gap-1 px-3 md:px-3 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-blue-600 hover:bg-blue-500 rounded transition-colors disabled:opacity-50 text-sm font-bold text-white shadow-lg shadow-blue-500/20 shrink-0"
                     aria-label="Run SCC Algorithm"
                 >
-                    <Play size={14} />
+                    <Play size={16} className="md:w-3.5 md:h-3.5" />
                     <span>Run SCC</span>
                 </button>
             </div>

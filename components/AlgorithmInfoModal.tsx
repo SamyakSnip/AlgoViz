@@ -28,12 +28,12 @@ export const AlgorithmInfoModal: React.FC<AlgorithmInfoModalProps> = ({ isOpen, 
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed inset-0 m-auto z-[70] w-[90vw] md:w-[700px] h-[80vh] bg-[#0f1115] border border-white/10 rounded-xl shadow-2xl flex flex-col overflow-hidden"
+                        className="fixed inset-4 md:inset-0 m-auto z-[70] md:w-[700px] md:h-[80vh] h-[calc(100vh-2rem)] bg-[#0f1115] border border-white/10 rounded-xl shadow-2xl flex flex-col overflow-hidden"
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-white/5 bg-white/5">
+                        <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/5 bg-white/5">
                             <div>
-                                <h2 className="text-xl font-bold text-white mb-1">{metadata.name}</h2>
+                                <h2 className="text-lg md:text-xl font-bold text-white mb-1">{metadata.name}</h2>
                                 <div className="flex gap-2">
                                     <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-mono border border-blue-500/30">
                                         Time: {metadata.complexity.time}
@@ -43,13 +43,16 @@ export const AlgorithmInfoModal: React.FC<AlgorithmInfoModalProps> = ({ isOpen, 
                                     </span>
                                 </div>
                             </div>
-                            <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors">
+                            <button
+                                onClick={onClose}
+                                className="p-2 md:p-2 min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors flex items-center justify-center"
+                            >
                                 <X size={20} />
                             </button>
                         </div>
 
                         {/* Tabs */}
-                        <div className="flex border-b border-white/5 bg-black/20 px-6">
+                        <div className="flex border-b border-white/5 bg-black/20 px-2 md:px-6 overflow-x-auto scrollbar-hide">
                             <TabButton
                                 icon={<BookOpen size={14} />}
                                 label="Concept"
@@ -77,7 +80,7 @@ export const AlgorithmInfoModal: React.FC<AlgorithmInfoModalProps> = ({ isOpen, 
                         </div>
 
                         {/* Content */}
-                        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar bg-[#0a0a0b]">
+                        <div className="flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar bg-[#0a0a0b]">
                             {activeTab === "concept" ? (
                                 <div className="prose prose-invert max-w-none">
                                     <p className="text-slate-300 leading-relaxed text-sm">
@@ -106,13 +109,14 @@ export const AlgorithmInfoModal: React.FC<AlgorithmInfoModalProps> = ({ isOpen, 
 const TabButton = ({ icon, label, isActive, onClick }: { icon: React.ReactNode, label: string, isActive: boolean, onClick: () => void }) => (
     <button
         onClick={onClick}
-        className={`flex items-center gap-2 px-4 py-3 text-xs font-medium border-b-2 transition-colors ${isActive
-                ? "border-blue-500 text-blue-400"
-                : "border-transparent text-slate-400 hover:text-slate-200 hover:border-white/10"
+        className={`flex items-center gap-2 px-3 md:px-4 py-3 text-xs font-medium border-b-2 transition-colors shrink-0 ${isActive
+            ? "border-blue-500 text-blue-400"
+            : "border-transparent text-slate-400 hover:text-slate-200 hover:border-white/10"
             }`}
     >
         {icon}
-        {label}
+        <span className="hidden sm:inline">{label}</span>
+        <span className="sm:hidden">{label.slice(0, 3)}</span>
     </button>
 );
 
