@@ -62,7 +62,9 @@ interface VisualizerContextType {
     clearBoard: () => void;
     // Graph
     graphNodes: GraphNode[];
+    setGraphNodes: (nodes: GraphNode[]) => void;
     graphEdges: GraphEdge[];
+    setGraphEdges: (edges: GraphEdge[]) => void;
     generateGraph: () => void;
     // Step Tracking
     steps: AnimationStep[];
@@ -593,8 +595,6 @@ export const VisualizerProvider = ({ children }: { children: ReactNode }) => {
                 handleMouseEnter,
                 handleMouseUp,
                 clearBoard,
-                graphNodes,
-                graphEdges,
                 generateGraph,
                 steps,
                 currentStep

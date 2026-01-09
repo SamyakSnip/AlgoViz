@@ -816,5 +816,29 @@ val = queue.popleft()`
             js: placeholderCode("JavaScript"),
             python: placeholderCode("Python")
         }
+    },
+    MIN_HEAP: {
+        name: "Min Heap",
+        description: "Binary heap where parent is smaller than children.",
+        complexity: { time: "O(log n)", space: "O(n)" },
+        category: "Data Structure",
+        learnMore: "A Min Heap is a complete binary tree where the value of each node is less than or equal to the values of its children. This property makes it efficient for implementing priority queues and heap sort.",
+        code: {
+            cpp: placeholderCode("C++"),
+            js: placeholderCode("JavaScript"),
+            python: placeholderCode("Python")
+        }
+    },
+    MAX_HEAP: {
+        name: "Max Heap",
+        description: "Binary heap where parent is larger than children.",
+        complexity: { time: "O(log n)", space: "O(n)" },
+        category: "Data Structure",
+        learnMore: "A Max Heap is a complete binary tree where the value of each node is greater than or equal to the values of its children. This property makes it efficient for implementing priority queues and finding maximum elements quickly.",
+        code: {
+            cpp: placeholderCode("C++"),
+            js: placeholderCode("JavaScript"),
+            python: placeholderCode("Python")
+        }
     }
 };
