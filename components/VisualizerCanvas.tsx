@@ -40,9 +40,9 @@ export const VisualizerCanvas = () => {
                 <>
                     {/* Block View (For Radix/Bucket Sort) */}
                     {isBlockAlgo && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center p-2 md:p-4">
                             {/* Main Array Blocks */}
-                            <div className="flex gap-1 mb-10 items-end h-24 w-full overflow-x-auto px-4 justify-start pb-4">
+                            <div className="flex gap-1 md:gap-1 mb-6 md:mb-10 items-end h-20 md:h-24 w-full overflow-x-auto px-2 md:px-4 justify-start pb-4">
                                 {array.map((value, idx) => {
                                     const isHidden = hiddenIndices.includes(idx);
                                     let bgClass = "bg-white/10";
@@ -56,7 +56,7 @@ export const VisualizerCanvas = () => {
                                     return (
                                         <div
                                             key={`block-${idx}`}
-                                            className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 border rounded flex items-center justify-center text-xs md:text-sm font-mono transition-all duration-300 ${bgClass} ${borderClass}`}
+                                            className={`flex-shrink-0 w-10 h-10 md:w-10 md:h-10 border rounded flex items-center justify-center text-xs md:text-sm font-mono transition-all duration-300 ${bgClass} ${borderClass}`}
                                             style={{
                                                 opacity: isHidden ? 0 : 1,
                                                 transform: isHidden ? 'scale(0)' : 'scale(1)'
@@ -69,10 +69,10 @@ export const VisualizerCanvas = () => {
                             </div>
 
                             {/* Buckets */}
-                            <div className="flex gap-2 md:gap-4 mt-4 w-full overflow-x-auto px-4 justify-start pb-4">
+                            <div className="flex gap-2 md:gap-4 mt-2 md:mt-4 w-full overflow-x-auto px-2 md:px-4 justify-start pb-4">
                                 {buckets.map((bucket, bIdx) => (
                                     <div key={`bucket-${bIdx}`} className="flex-shrink-0 flex flex-col items-center gap-1">
-                                        <div className="w-10 md:w-14 h-48 md:h-64 border-2 border-slate-600 rounded-b-lg bg-slate-800/50 flex flex-col-reverse p-1 overflow-y-auto overflow-x-hidden relative scrollbar-thin scrollbar-thumb-slate-600">
+                                        <div className="w-12 md:w-14 h-40 md:h-64 border-2 border-slate-600 rounded-b-lg bg-slate-800/50 flex flex-col-reverse p-1 overflow-y-auto overflow-x-hidden relative scrollbar-thin scrollbar-thumb-slate-600">
                                             <AnimatePresence mode="popLayout">
                                                 {bucket.map((val, itemIdx) => (
                                                     <motion.div
@@ -82,14 +82,14 @@ export const VisualizerCanvas = () => {
                                                         animate={{ opacity: 1, y: 0, scale: 1 }}
                                                         exit={{ opacity: 0, scale: 0 }}
                                                         transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                                                        className="w-full h-8 min-h-[2rem] bg-indigo-500 rounded flex flex-shrink-0 items-center justify-center text-xs text-white font-bold mb-1 border border-indigo-400 shadow-sm z-10"
+                                                        className="w-full h-7 md:h-8 min-h-[1.75rem] md:min-h-[2rem] bg-indigo-500 rounded flex flex-shrink-0 items-center justify-center text-xs text-white font-bold mb-1 border border-indigo-400 shadow-sm z-10"
                                                     >
                                                         {val}
                                                     </motion.div>
                                                 ))}
                                             </AnimatePresence>
                                         </div>
-                                        <span className="text-slate-400 font-mono text-sm font-bold bg-slate-900/80 px-2 rounded">{bIdx}</span>
+                                        <span className="text-slate-400 font-mono text-xs md:text-sm font-bold bg-slate-900/80 px-2 rounded">{bIdx}</span>
                                     </div>
                                 ))}
                             </div>
@@ -98,7 +98,7 @@ export const VisualizerCanvas = () => {
 
                     {/* Standard Bar View (For other sorts) */}
                     {!isBlockAlgo && (
-                        <div className="flex items-end justify-center gap-[2px] w-full h-full max-h-[600px]">
+                        <div className="flex items-end justify-center gap-[2px] md:gap-1 w-full h-full max-h-[400px] md:max-h-[600px] px-2 md:px-0">
                             <AnimatePresence>
                                 {array.map((value, idx) => {
                                     let barColor = "rgba(255, 255, 255, 0.1)";
@@ -133,7 +133,7 @@ export const VisualizerCanvas = () => {
                                                 boxShadow: glow
                                             }}
                                             transition={{ duration: 0.1 }}
-                                            className="w-full rounded-t-sm relative group"
+                                            className="w-full min-w-[4px] md:min-w-[6px] rounded-t-sm relative group"
                                         >
                                         </motion.div>
                                     );

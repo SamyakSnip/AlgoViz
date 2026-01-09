@@ -31,12 +31,29 @@ const Node = React.memo(({
     return (
         <div
             className={clsx(
-                "w-6 h-6 border border-white/5 transition-all duration-200",
+                "w-5 h-5 sm:w-6 sm:h-6 md:w-6 md:h-6 lg:w-7 lg:h-7 border border-white/5 transition-all duration-200 cursor-pointer hover:brightness-125 active:scale-95",
                 bgClass
             )}
             onMouseDown={() => onMouseDown(row, col)}
             onMouseEnter={() => onMouseEnter(row, col)}
             onMouseUp={onMouseUp}
+            onTouchStart={(e) => {
+                e.preventDefault();
+                onMouseDown(row, col);
+            }}
+            onTouchMove={(e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                if (element && element.hasAttribute('data-row')) {
+                    const r = parseInt(element.getAttribute('data-row') || '0');
+                    const c = parseInt(element.getAttribute('data-col') || '0');
+                    onMouseEnter(r, c);
+                }
+            }}
+            onTouchEnd={onMouseUp}
+            data-row={row}
+            data-col={col}
         />
     );
 });
@@ -48,8 +65,9 @@ export const Grid = () => {
 
     return (
         <div
-            className="flex flex-col items-center justify-center p-4 select-none"
+            className="flex flex-col items-center justify-center p-2 md:p-4 select-none touch-none overflow-auto max-h-[calc(100vh-12rem)]"
             onMouseLeave={handleMouseUp}
+            onTouchEnd={handleMouseUp}
         >
             {grid.map((row, rowIdx) => (
                 <div key={rowIdx} className="flex">
