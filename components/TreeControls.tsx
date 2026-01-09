@@ -117,71 +117,71 @@ export const TreeControls = () => {
     return (
         <DraggableControlWrapper>
             <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 overflow-x-auto max-w-[95vw] scrollbar-hide">
+                <div className="flex flex-wrap md:flex-nowrap items-center gap-2 overflow-x-auto max-w-[95vw] scrollbar-hide p-1">
                     {/* Input Group */}
-                    <div className="flex items-center gap-2 mr-2 shrink-0">
+                    <div className="flex items-center gap-2 shrink-0">
                         <input
                             type="number"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             placeholder="Value"
-                            className="w-16 md:w-20 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-blue-500"
+                            className="w-16 md:w-20 h-10 md:h-auto bg-slate-800 border border-slate-700 rounded px-3 md:px-2 py-2 md:py-1 text-white text-sm focus:outline-none focus:border-blue-500"
                             onKeyDown={(e) => e.key === "Enter" && handleOp("insert")}
                         />
                         <button
                             onClick={handleRandom}
-                            className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-white text-xs"
+                            className="px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 rounded hover:bg-white/10 text-slate-400 hover:text-white text-xs font-medium"
                             title="Random Value"
                         >
                             Rnd
                         </button>
                     </div>
 
-                    <div className="h-6 w-px bg-white/10 mx-1 shrink-0" />
+                    <div className="h-6 w-px bg-white/10 mx-1 shrink-0 hidden md:block" />
 
                     {/* Operations */}
                     <div className="flex items-center gap-2 shrink-0">
                         <button
                             onClick={() => handleOp("insert")}
                             disabled={isPlaying || !inputValue}
-                            className="flex items-center gap-1 px-3 py-1 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-blue-500/50"
+                            className="flex items-center gap-1 px-3 md:px-3 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-blue-500/50"
                         >
-                            <Plus size={14} />
+                            <Plus size={16} className="md:w-3.5 md:h-3.5" />
                             <span>Insert</span>
                         </button>
 
                         <button
                             onClick={() => handleOp("delete")}
                             disabled={isPlaying || !treeRoot}
-                            className="flex items-center gap-1 px-3 py-1 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-red-500/50"
+                            className="flex items-center gap-1 px-3 md:px-3 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-red-500/50"
                         >
-                            <Minus size={14} />
+                            <Minus size={16} className="md:w-3.5 md:h-3.5" />
                             <span>Delete</span>
                         </button>
                     </div>
 
-                    <div className="h-6 w-px bg-white/10 mx-1 shrink-0" />
+                    <div className="h-6 w-px bg-white/10 mx-1 shrink-0 hidden md:block" />
 
                     {/* Traversals */}
                     <div className="flex items-center gap-1 shrink-0">
                         <button
                             onClick={() => runTraversal("inorder")}
                             disabled={isPlaying || !treeRoot}
-                            className="px-2 py-1 hover:bg-white/10 text-slate-300 rounded text-xs font-medium transition-colors"
+                            className="px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 hover:bg-white/10 text-slate-300 rounded text-xs font-medium transition-colors disabled:opacity-50"
                         >
                             InOrder
                         </button>
                         <button
                             onClick={() => runTraversal("preorder")}
                             disabled={isPlaying || !treeRoot}
-                            className="px-2 py-1 hover:bg-white/10 text-slate-300 rounded text-xs font-medium transition-colors"
+                            className="px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 hover:bg-white/10 text-slate-300 rounded text-xs font-medium transition-colors disabled:opacity-50"
                         >
                             PreOrder
                         </button>
                         <button
                             onClick={() => runTraversal("postorder")}
                             disabled={isPlaying || !treeRoot}
-                            className="px-2 py-1 hover:bg-white/10 text-slate-300 rounded text-xs font-medium transition-colors"
+                            className="px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 hover:bg-white/10 text-slate-300 rounded text-xs font-medium transition-colors disabled:opacity-50"
                         >
                             PostOrder
                         </button>
@@ -189,10 +189,10 @@ export const TreeControls = () => {
 
                     <button
                         onClick={handleClear}
-                        className="ml-2 p-1.5 rounded hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors shrink-0"
+                        className="ml-2 p-2 md:p-1.5 min-h-[40px] min-w-[40px] md:min-h-0 md:min-w-0 rounded hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors shrink-0 flex items-center justify-center"
                         title="Clear Tree"
                     >
-                        <Trash2 size={16} />
+                        <Trash2 size={18} className="md:w-4 md:h-4" />
                     </button>
                 </div>
 

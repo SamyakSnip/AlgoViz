@@ -76,19 +76,19 @@ export const DSControls = () => {
 
     return (
         <DraggableControlWrapper>
-            <div className="flex items-center gap-2 overflow-x-auto max-w-[95vw] scrollbar-hide">
-                <div className="flex items-center gap-2 mr-2 shrink-0">
+            <div className="flex flex-wrap md:flex-nowrap items-center gap-2 overflow-x-auto max-w-[95vw] scrollbar-hide p-1">
+                <div className="flex items-center gap-2 shrink-0">
                     <input
                         type="number"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         placeholder="Value"
-                        className="w-20 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-blue-500"
+                        className="w-20 md:w-20 h-10 md:h-auto bg-slate-800 border border-slate-700 rounded px-3 md:px-2 py-2 md:py-1 text-white text-sm focus:outline-none focus:border-blue-500"
                         onKeyDown={(e) => e.key === "Enter" && handleAdd(false)}
                     />
                     <button
                         onClick={handleRandom}
-                        className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-white text-xs"
+                        className="px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 rounded hover:bg-white/10 text-slate-400 hover:text-white text-xs font-medium"
                         title="Random Value"
                         aria-label="Generate Random Value"
                     >
@@ -96,25 +96,25 @@ export const DSControls = () => {
                     </button>
                 </div>
 
-                <div className="h-6 w-px bg-white/10 mx-1 shrink-0" />
+                <div className="h-6 w-px bg-white/10 mx-1 shrink-0 hidden md:block" />
 
                 {!isIsLL && (
                     <>
                         <button
                             onClick={() => handleAdd(false)}
                             disabled={isPlaying || !inputValue}
-                            className="flex items-center gap-1 px-3 py-1 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-blue-500/50"
+                            className="flex items-center gap-1 px-3 md:px-3 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-blue-500/50 shrink-0"
                         >
-                            <Plus size={14} />
+                            <Plus size={16} className="md:w-3.5 md:h-3.5" />
                             <span>{isStack ? "Push" : "Enqueue"}</span>
                         </button>
 
                         <button
                             onClick={() => handleRemove(true)}
                             disabled={isPlaying || array.length === 0}
-                            className="flex items-center gap-1 px-3 py-1 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-red-500/50"
+                            className="flex items-center gap-1 px-3 md:px-3 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-sm font-bold border border-red-500/50 shrink-0"
                         >
-                            <Minus size={14} />
+                            <Minus size={16} className="md:w-3.5 md:h-3.5" />
                             <span>{isStack ? "Pop" : "Dequeue"}</span>
                         </button>
                     </>
@@ -126,36 +126,36 @@ export const DSControls = () => {
                         <button
                             onClick={() => handleAdd(true)}
                             disabled={isPlaying || !inputValue}
-                            className="flex items-center gap-1 px-2 py-1 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-xs font-bold border border-blue-500/50"
+                            className="flex items-center gap-1 px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-sm md:text-xs font-bold border border-blue-500/50 shrink-0"
                         >
-                            <Plus size={12} />
+                            <Plus size={14} className="md:w-3 md:h-3" />
                             Head
                         </button>
                         <button
                             onClick={() => handleAdd(false)}
                             disabled={isPlaying || !inputValue}
-                            className="flex items-center gap-1 px-2 py-1 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-xs font-bold border border-blue-500/50"
+                            className="flex items-center gap-1 px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded transition-colors disabled:opacity-50 text-sm md:text-xs font-bold border border-blue-500/50 shrink-0"
                         >
-                            <Plus size={12} />
+                            <Plus size={14} className="md:w-3 md:h-3" />
                             Tail
                         </button>
 
-                        <div className="h-6 w-px bg-white/10 mx-1 shrink-0" />
+                        <div className="h-6 w-px bg-white/10 mx-1 shrink-0 hidden md:block" />
 
                         <button
                             onClick={() => handleRemove(true)}
                             disabled={isPlaying || array.length === 0}
-                            className="flex items-center gap-1 px-2 py-1 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-xs font-bold border border-red-500/50"
+                            className="flex items-center gap-1 px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-sm md:text-xs font-bold border border-red-500/50 shrink-0"
                         >
-                            <Minus size={12} />
+                            <Minus size={14} className="md:w-3 md:h-3" />
                             Head
                         </button>
                         <button
                             onClick={() => handleRemove(false)}
                             disabled={isPlaying || array.length === 0}
-                            className="flex items-center gap-1 px-2 py-1 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-xs font-bold border border-red-500/50"
+                            className="flex items-center gap-1 px-3 md:px-2 py-2 md:py-1 min-h-[40px] md:min-h-0 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded transition-colors disabled:opacity-50 text-sm md:text-xs font-bold border border-red-500/50 shrink-0"
                         >
-                            <Minus size={12} />
+                            <Minus size={14} className="md:w-3 md:h-3" />
                             Tail
                         </button>
                     </>
@@ -163,11 +163,11 @@ export const DSControls = () => {
 
                 <button
                     onClick={handleClear}
-                    className="ml-2 p-1.5 rounded hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors shrink-0"
+                    className="ml-2 p-2 md:p-1.5 min-h-[40px] min-w-[40px] md:min-h-0 md:min-w-0 rounded hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors shrink-0 flex items-center justify-center"
                     title="Clear All"
                     aria-label="Clear All Elements"
                 >
-                    <Trash2 size={16} />
+                    <Trash2 size={18} className="md:w-4 md:h-4" />
                 </button>
             </div>
         </DraggableControlWrapper>
